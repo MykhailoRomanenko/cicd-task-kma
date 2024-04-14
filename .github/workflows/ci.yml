@@ -17,21 +17,15 @@ jobs:
           override: true
 
       - name: Build
-        uses: actions-rs/cargo@v1
-        with:
-          command: build
-          args: --release
+      - run: cargo build
 
       - name: Run lints
-        uses: actions-rs/cargo@v1
-        with:
-          command: clippy
+      - run: |
+         cargo clippy -- -Dwarnings
+         cargo fmt --check
 
       - name: Run tests
-        uses: actions-rs/cargo@v1
-        with:
-          command: test
-
+      - run: cargo test
   docker:
     name: Build Docker Container
     needs: build
